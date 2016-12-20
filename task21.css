@@ -1,0 +1,38 @@
+
+.display{
+    height: 50px;
+    /*background-color: #8e96ff;*/
+    box-shadow: 2px 2px #ccc;
+    margin: 5px;
+    line-height: 50px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    float: left;
+    cursor: pointer;
+}
+label{
+    font-size: 20px;
+    font-weight: bold;
+    font-family:"黑体";
+}
+#tag{
+    border: 3px solid #4092ff;
+    box-shadow: 2px 2px 0.7px #8e96ff;
+    margin: 20px;
+    height: 25px;
+    width: 200px;
+}
+
+#area{
+    clear: left;
+}
+
+div{
+    margin-bottom: 40px;
+}
+
+input[type=button]{
+    border-radius : 5px;
+    background-color: #fff;
+}

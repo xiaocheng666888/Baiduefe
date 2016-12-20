@@ -1,0 +1,52 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 01</title>
+</head>
+<body>
+
+    <ul id="source">
+        <li name="aqi">北京空气质量：<b>90</b></li>
+        <li name="aqi">上海空气质量：<b>70</b></li>
+        <li name="aqi">天津空气质量：<b>80</b></li>
+        <li name="aqi">广州空气质量：<b>50</b></li>
+        <li name="aqi">深圳空气质量：<b>40</b></li>
+        <li name="aqi">福州空气质量：<b>32</b></li>
+        <li name="aqi">成都空气质量：<b>90</b></li>
+    </ul>
+
+    <ul id="resort">
+        <!--
+        <li>第一名：北京空气质量：<b>90</b></li>
+        <li>第二名：北京空气质量：<b>90</b></li>
+        <li>第三名：北京空气质量：<b>90</b></li>
+         -->
+              <!--var data = [-->
+                    <!--["北京",90],-->
+                    <!--["上海",70],-->
+                    <!--["天津",80],-->
+                    <!--["广州",50],-->
+                    <!--["深圳",40],-->
+                    <!--["福州",32],-->
+                    <!--["成都",90]-->
+                <!--];-->
+
+    </ul>
+    <button id="sort-btn">排序</button>
+    <script type="text/javascript" src="task15.js">
+
+    </script>
+</body>
+</html>
+
+<!--总结-->
+
+<!--1.sortData没有给返回值-->
+    <!--虽然data.sort().有返回值，但是自定义的sortData没有，导致后来aqiData = sortAqiData(aqiData);赋值后为空-->
+
+<!--2.使用getElementByTagName()有个问题，就是后来JS生成的li元素也会被计算在内，导致按钮多次被点击后出现混乱，所以在前面为li元素添加name，后面使用getElementByName()-->
+
+<!--3.巩固了forEach(),sort()的使用-->
+
+<!--4.学会了字符串截取函数的使用substr(start,length)   ,substring(start,end)-->

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IFE JavaScript Task 20</title>
+    <link rel="stylesheet" href="task21.css">
+</head>
+<body>
+<div>
+    <label>Tags:</label>
+    <input id = "tag">
+</div>
+<div id="display_list">
+    <!--<div class="display">1</div>-->
+</div>
+<div id="area">
+    <textarea id="hobby" rows="10" cols="40"></textarea><br/>
+    <input type="button" value="确认兴趣爱好" onclick="addHobby()">
+</div>
+<div id="dis_hobby"></div>
+<script>
+
+    //要求遇到用户输入空格，逗号，回车时，都自动把当前输入的内容作为一个tag放在输入框下面。
+//    通过一个Textarea进行兴趣爱好的输入，可以通过用回车，逗号（全角半角均可），顿号，空格（全角半角、Tab等均可）等符号作为间隔。
+//    当点击“确认兴趣爱好”的按钮时，将textarea中的输入按照你设定的间隔符，拆解成一个个的爱好，显示在textarea下方
+//    爱好不能重复，所以在下方呈现前，需要做一个去重
+//    每个爱好内容需要做trim处理
+//    最多允许10个兴趣爱好，多于10个时，按照录入的先后顺序，把最前面的删掉
+
+    var LIGHTBLUE = "#8e96ff";
+    var RED = "red";
+    var BROWN =  "#F4A460";
+
+    var $ = function(id){
+        return document.getElementById(id);
+    };
+
+    window.onload = function () {
+
+        document.onkeyup = function (event) {
+            if(event.keyCode == 13){
+                var value = $("tag").value.trim();
+                if(!isExist(value)){
+                    var div = createDiv(value,LIGHTBLUE);
+                    $("display_list").appendChild(div);
+                    $("tag").value = "";
+                }
+                checkLength();
+            }
+        };
+        setInterval(function () {
+            disListCheck();
+            tagChanged();
+        },500)
+    };
+
+    function addHobby() {
+        $("dis_hobby").innerHTML = "";
+        var list = getList();
+        for(var i = 0; i < list.length; i ++){
+            if(list.length>10){
+                list.splice(0,1);
+            }else {
+                $("dis_hobby").appendChild(list[i]);
+            }
+        }
+    }
+
+    function getList() {
+        var value = $("hobby").value;
+        var list = [];
+        if(value == ""){
+            alert("请输入内容");
+            return ;
+        }
+        var content = value.split(/[\s\n\r\，\,\、\t\ ]/);    //去掉输入的空格、回车、逗号
+        dupRemove(content);
+        for(var i = 0; i < content.length; i++){
+            var div = createDiv(content[i],BROWN);
+            list.push(div);
+        }
+        return list;
+    }
+
+    function disListCheck() {
+        var disList = getEle("display");
+        for (var i = 0; i < disList.length; i++) {
+            disList[i].index = i;
+            disList[i].onclick = function () {
+                this.parentNode.removeChild(this);
+            };
+            disList[i].onmouseover = function () {
+                this.color = this.style.backgroundColor;
+                LOG("原来的颜色是:"+this.color);
+                this.style.backgroundColor = RED;
+                this.innerText = "点击删除" + this.innerText;
+            };
+            disList[i].onmouseout = function () {
+                this.style.backgroundColor = this.color;
+                this.innerText = this.innerText.slice(4);
+            }
+        }
+
+    }
+
+    function dupRemove(arr) {
+        for(var i = 0; i < arr.length - 1; i++){
+            for(var j = i+1; j < arr.length; j++){
+                if(arr[j] === arr[i]){
+                    arr.splice(j,1);
+                }
+            }
+            if(arr[i]==""||typeof(arr[i])=="undefined"){
+                arr.splice(i,1);
+                i--;
+            }
+        }
+
+        if(arr.length>10){
+            arr.splice(0,arr.length-10);
+        }
+    }
+
+    function checkLength() {
+        var dl = getEle("display");
+        if(dl.length == 11){
+            dl[0].parentNode.removeChild(dl[0]);
+        }
+    }
+
+    function tagChanged() {
+        var tag = getEle("tag");
+        var dl = getEle("display_list");
+        LOG("this is tagChanged()");
+        var tagArr = tag.value.split("");
+        var lastChar = tagArr[tagArr.length-1]
+        if(lastChar=="，"||lastChar == " "||document.onkeyup == 13){
+            var value = tag.value.slice(0,-1).trim();
+            if(!isExist(value)){
+                var div = createDiv(value,LIGHTBLUE);
+                dl.appendChild(div);
+                tag.value = "";
+            }
+            checkLength();
+        }
+    }
+    
+    function isExist(value) {
+        var list = getEle("display");
+        for(var i = 0; i < list.length; i++){
+            if(value == list[i].innerText){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 根据属性以指定的方式获取元素
+     *
+     * @param attr      属性：ID,ClassName,TagName
+     * @returns {*}     符合要求的元素或元素数组
+     */
+    function getEle(attr) {
+        var element;
+        if(document.getElementById(attr)!=null){
+            element = document.getElementById(attr);
+        }else if(document.getElementsByClassName(attr)!=null){
+            element = document.getElementsByClassName(attr);
+        }else if(document.getElementsByName(attr)!=null){
+            element = document.getElementsByName(attr);
+        }else if(document.getElementsByTagName(attr)!=null){
+            element = document.getElementsByTagName(attr);
+        }else {
+            return null;
+        }
+        return element;
+    }
+
+    function LOG(str) {
+        console.log(str);
+    }
+
+    function createDiv(value,color) {
+        if(value!=""){
+            var div = document.createElement("div");
+            div.className = "display";
+            div.innerText = value;
+            div.style.backgroundColor = color;
+            return div;
+        }else{
+            LOG("输入值为空");
+        }
+    }
+</script>
+</body>
+</html>
+

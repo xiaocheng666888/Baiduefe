@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IFE JavaScript Task 13</title>
+
+</head>
+
+<body>
+    <label>请输入北京今天空气质量:<input id="aqi_input"></label>
+
+    <button id="button" onclick="showAir('aqi_input')">确认填写</button>
+    <div>你输入的值是：<span id="aqi_display">尚无录入</span></div>
+
+    <script>
+        function showAir(id) {
+            var air_value = document.getElementById(id).value;
+            document.getElementById("aqi_display").innerHTML = air_value;
+            try {
+                var text ="/^[a-zA-Z]+$/";
+                if(air_value.match(text)){
+                    throw "请不要输入英文"
+                }else if(air_value>"1000"){
+                    throw "数值太大，不合格"
+                }
+            }catch (err){
+                alert(err);
+            }
+
+        }
+    </script>
+</body>
+</html>

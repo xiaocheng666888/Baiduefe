@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>实践题 - 选项卡</title>
+    <style type="text/css">
+        /* CSS样式制作 */
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            width: 100px;
+            float: left;
+            margin-right: 1px;
+            background-color: #ccc;
+            list-style: none;
+            display: block;
+            cursor: pointer;
+        }
+         ul{
+             margin-left: 0;
+         }
+        div{
+            width: 300px;
+            height: 150px;
+            /*height: 200px;*/
+            background-color: #ccc;
+            display: none;
+            /*border: 1px solid #828387;*/
+
+        }
+        li.tabli{
+            background-color: #828387;
+        }
+        div.tabdiv{
+            display: block;
+            background-color: #828387;
+        }
+    </style>
+    <script type="text/javascript">
+
+        // JS实现选项卡切换
+        window.onload = function () {
+            var lis = document.getElementsByTagName("li");
+            console.log(lis.length);
+            var divs = document.getElementsByTagName("div");
+            console.log(divs.length);
+            for(var i=0;i<lis.length;i++){
+                lis[i].zhufeng = i;
+                console.log(lis[i].zhufeng);
+                lis[i].onclick = function () {
+                    for(var j=0;j<divs.length;j++){
+                        divs[j].className ="";
+                        lis[j].className = "";
+                    }
+                    lis[this.zhufeng].className = "tabli";
+                    divs[this.zhufeng].className = "tabdiv";
+                }
+
+            }
+        }
+    </script>
+
+</head>
+<body>
+<!-- HTML页面布局 -->
+    <ul>
+        <!--<li class="tabli"><a href="#">房产</a></li>-->
+        <!--<li><a href="#">家居</a></li>-->
+        <!--<li><a href="#">二手房</a></li>-->
+        <li class="tabli">房产</li>
+        <li>家居</li>
+        <li>二手房</li>
+
+    </ul>
+    <div class="tabdiv" >
+        275万购昌平邻铁三居 总价20万买一居
+        200万内购五环三居 140万安家东三环
+        北京首现零首付楼盘 53万购东5环50平
+        京楼盘直降5000 中信府 公园楼王现房
+    </div>
+    <div>
+        40平出租屋大改造 美少女的混搭小窝
+        经典清新简欧爱家 90平老房焕发新生
+        新中式的酷色温情 66平撞色活泼家居
+        瓷砖就像选好老婆 卫生间烟道的设计
+    </div>
+    <div>
+        通州豪华3居260万 二环稀缺2居250w甩
+        西3环通透2居290万 130万2居限量抢购
+        黄城根小学学区仅260万 121平70万抛!
+        独家别墅280万 苏州桥2居优惠价248万
+    </div>
+
+</body>
+</html>
+
+
+//经验总结：记住js代码的执行顺序；

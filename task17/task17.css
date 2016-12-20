@@ -1,0 +1,26 @@
+#aqi-chart-wrap{
+    height: 500px;
+    width: 500px;
+    background: #ccc;
+    position: relative;
+}
+
+.diagram{
+    background-color: red;
+    position: absolute;
+    bottom: 0;
+}
+
+.month{
+    position: absolute;
+    bottom: 0;
+}
+.week{
+    position: absolute;
+    bottom: 0;
+}
+
+.day{
+    position: absolute;
+    bottom: 0;
+}

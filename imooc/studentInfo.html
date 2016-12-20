@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> new document </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=gbk"/>
+    <script type="text/javascript">
+
+        window.onload = function(){
+
+            // 鼠标移动改变背景,可以通过给每行绑定鼠标移上事件和鼠标移除事件来改变所在行背景色。
+            var trs = document.getElementsByTagName("tr");
+            for(var i=0;i<trs.length;i++){
+                trs[i].index = i;
+                trs[i].onmouseover = function(){
+                    trs[this.index].style.backgroundColor = "#f2f2f2";
+                };
+                trs[i].onmouseout = function(){
+                    trs[this.index].style.backgroundColor = "#fff";
+                };
+            }
+        };
+
+        // 编写一个函数，供添加按钮调用，动态在表格的最后一行添加子节点；
+        function addTr() {
+            var stuname = document.getElementById("stuname").value;
+            var table = document.getElementById("table");
+
+
+            var newTr = document.createElement("tr");
+            var stuId = idCheck(table.childNodes.length-1);
+            var regex = /^[\u4E00-\u9FA5]+$/;
+
+
+            if(!regex.test(stuname)){
+                alert("请输入中文");
+                return;
+            }
+            if(stuname==""){
+                return;
+            }
+            newTr.innerHTML = "<td>xh"+stuId+"</td><td>"+stuname+"</td><td><a href='javascript:removeChild();'>删除</a></td> ";
+            table.appendChild(newTr);
+        }
+
+        // 创建删除函数
+        function removeChild(event){
+            console.log("removeChild()");
+            var as = document.getElementsByTagName("a");
+            for(var i=0;i<as.length;i++){
+                as[i].onclick = function () {
+                    var tr = this.parentNode.parentNode;
+                    tr.parentNode.removeChild(tr);
+                }
+            }
+        }
+        function idCheck(stuId) {
+            if(stuId<10){
+                stuId = "00"+stuId;
+            }else if(stuId<100){
+                stuId = "0"+stuId;
+            }else{
+                stuId = ""+stuId;
+            }
+            return stuId;
+        }
+    </script>
+</head>
+<body>
+    <!--学号<input>-->
+    姓名<input type="text" id="stuname">
+
+    <table border="1" width="50%" id="table"><tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>操作</th>
+            </tr>
+            <tr>
+                <td>xh001</td>
+                <td>王小明</td>
+                <td><a href="javascript:removeChild();" >删除</a></td>        <!--在删除按钮上添加点击事件  -->
+            </tr>
+            <tr><td>xh002</td>
+                <td>刘小芳</td>
+                <td><a href="javascript:removeChild();" >删除</a></td>   <!--在删除last按钮上添加点击事件  -->
+            </tr></table>
+<input type="button" value="添加一行"  onclick="addTr()"/>   <!--在添加按钮上添加点击事件  -->
+</body>
+</html>
+
+<!--//            var children = table.lastChild.lastChild.firstChild;-->
+<!--//            console.log(children.innerText);-->
+
+<!--//            console.log("长度"+children.length);-->
+<!--//            for(var i =0;i<children.length;i++){-->
+<!--//                console.log("第"+(i+1)+"个子节点");-->
+<!--//                console.log("节点类型："+children[i].nodeType+"         节点名称："+children[i].nodeName+"       节点的值："+children[i].nodeValue);-->
+<!--//            }-->
+<!--//            var children = table.lastChild.firstChild.childNodes;-->
+<!--//            for(var i in children){-->
+<!--//                console.log(children[i]);-->
+<!--//            }-->

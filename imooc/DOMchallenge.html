@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>下拉菜单</title>
+    <style type="text/css">
+        body,ul,li{ margin:0; padding:0; font-size:13px;}
+        ul,li{list-style:none;}
+        #divselect{width:186px; margin:80px auto; position:relative; z-index:10000;}
+        #divselect cite{width:150px; height:24px;line-height:24px; display:block; color:#807a62; cursor:pointer;font-style:normal;
+            padding-left:4px; padding-right:30px; border:1px solid #333333;
+            background:url(close.png) no-repeat right center;}
+        #divselect ul{width:184px;border:1px solid #333333; background-color:#ffffff; position:absolute; z-index:20000; margin-top:-1px; display:none;}
+        #divselect ul li{height:24px; line-height:24px;}
+        #divselect ul li a{display:block; height:24px; color:#333333; text-decoration:none; padding-left:10px; padding-right:10px;}
+    </style>
+    <script type="text/javascript">
+        window.onload=function(){
+            var box=document.getElementById('divselect'),
+                title=box.getElementsByTagName('cite')[0],
+                menu=box.getElementsByTagName('ul')[0],
+                as=box.getElementsByTagName('a'),
+                lis = menu.childNodes,
+                index=-1,
+                newLis = [];
+
+            for(var i = 0; i<lis.length; i++){
+                if(lis[i].nodeType==1){
+                    newLis.push(lis[i]);
+                }
+            }
+
+            // 点击三角时
+            title.onclick=function(event){
+                // 执行脚本
+                menu.style.display = "block";
+                event.stopPropagation();
+//                event.preventBubble();
+//                event.cancelBubble;
+//                event.preventDefault();
+            };
+
+            // 滑过滑过、离开、点击每个选项时
+            // 执行脚本
+            //1.整个文档监听键盘上按钮事件
+            document.onkeyup = function (event) {
+                console.log("none"+event.keyCode);
+                for(var i=0 ; i<5 ; i++){
+                    newLis[i].style.backgroundColor ="#fff";
+                }
+                //当列表项显示时，检测keyCode来判断按下的是哪个键，进一步做出操作
+                if(menu.style.display == "block"){
+                    console.log("block"+event.keyCode);
+                    //根据键值来处理
+                    switch (event.keyCode){
+                        case 13:                    //确认键
+                            if(index!=-1){
+                                console.log(newLis[index].innerText);
+                                title.innerText = newLis[index].innerText;
+                                index = -1;
+                                menu.style.display = "none";
+                            }
+                            break;
+                        case 40:                        //下方向键
+                                index ++;
+                                if(index == 5)
+                                    index = 0;
+                                newLis[index].style.backgroundColor="#ccc";
+                                break;
+                        case 38:                        //上方向键
+                            if(index <= 0)
+                                index = 5;
+                            index--;
+                            newLis[index].style.backgroundColor="#ccc";
+                            break;
+                    }
+
+                }
+            };
+            //2.li监听鼠标滑过事件
+            for(var i = 0; i < newLis.length; i++){
+                newLis[i].liIndex = i;
+                newLis[i].onmouseover = function () {
+                    for(var i = 0; i < newLis.length; i++){
+                        newLis[i].style.backgroundColor = "#fff";
+                    }
+                    newLis[this.liIndex].style.backgroundColor = "#ccc";
+                }
+                newLis[i].onclick = function () {
+                    console.log(newLis[this.liIndex]);
+                    title.innerText = newLis[this.liIndex].innerText;
+                }
+            }
+
+            // 点击页面空白处时
+            // 执行脚本
+            document.onclick = function () {
+                menu.style.display = "none";
+            };
+
+            //body和document的区别：body为内容区域，document为整个文档区域，
+        }
+    </script>
+</head>
+<body>
+<div id="divselect">
+    <cite>请选择分类</cite>
+    <ul>
+        <li id="li"><a href="javascript:;" selectid="1">ASP开发</a></li>
+        <li><a href="javascript:;" selectid="2">.NET开发</a></li>
+        <li><a href="javascript:;" selectid="3">PHP开发</a></li>
+        <li><a href="javascript:;" selectid="4">Javascript开发</a></li>
+        <li><a href="javascript:;" selectid="5">Java特效</a></li>
+    </ul>
+</div>
+</body>
+</html>

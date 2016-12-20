@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 18</title>
+    <style>
+        .display{
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            box-shadow: 2px 2px #ccc;
+            margin: 5px;
+            text-align: center;
+            line-height: 50px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            float: left;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="text" id="iNum">
+        <input type="button" onclick="btn_leftIn()" name="button" value="左侧入" id="leftIn">
+        <input type="button" onclick="btn_rightIn()" name="button" value="右侧入" id="rightIn">
+        <input type="button" onclick="btn_leftOut()" name="button" value="左侧出" id="leftOut">
+        <input type="button" onclick="btn_rightOut()" name="button" value="右侧出" id="rightOut">
+    </div>
+    <div id="display_list">
+        <div class="display">1</div>
+    </div>
+    <script>
+
+        window.onload = setInterval(divListCheck,500);
+        function btn_rightOut() {
+            var dis = getDis();
+            dis.removeChild(dis.lastChild);
+        }
+
+        function btn_leftOut() {
+            var dis = getDis();
+            dis.removeChild(dis.firstChild);
+        }
+
+        function btn_leftIn() {
+            var dis = getDis();
+            if(dis.firstChild == null){
+                dis.appendChild(getNewDiv());
+            }else
+                dis.insertBefore(getNewDiv(),dis.firstChild);
+
+        }
+        function btn_rightIn() {
+            var dis = getDis();
+            dis.appendChild(getNewDiv())
+        }
+
+        function getNewDiv() {
+            var num = document.getElementById("iNum");
+            var newDiv = document.createElement("div");
+            newDiv.className = "display";
+            newDiv.innerText = num.value;
+            return newDiv;
+        }
+        function getDis() {
+            var dis = document.getElementById("display_list");
+            return dis;
+        }
+
+        function divListCheck() {
+            var disList = document.getElementsByClassName("display");
+            for(var i = 0; i < disList.length; i++){
+                disList[i].index = i;
+                disList[i].onclick = function(){
+                    this.parentNode.removeChild(this);
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!--<!DOCTYPE  HTML>-->
+<!--<html >-->
+<!--<head>-->
+    <!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+    <!--<title>系好安全带,准备启航</title>-->
+
+    <!--<script type="text/javascript">-->
+
+        <!--//通过javascript的日期对象来得到当前的日期，并输出。-->
+        <!--var dat = new Date();-->
+        <!--var chinaNum = ["日","一","二","三","四","五","六"];-->
+        <!--var year = dat.getFullYear();-->
+        <!--var month = dat.getMonth()+1;-->
+        <!--var date = dat.getDate();-->
+        <!--var day = dat.getDay();-->
+        <!--document.write(year+"年"+month+"月"+date+"日 星期"+chinaNum[day]+"&#45;&#45;班级总分为：");-->
+
+        <!--//成绩是一长窜的字符串不好处理，找规律后分割放到数组里更好操作哦-->
+        <!--var scoreStr = "小明:87;小花:81;小红:97;小天:76;小张:74;小小:94;小西:90;小伍:76;小迪:64;小曼:76";-->
+        <!--var array = scoreStr.split(";");-->
+        <!--var scoreRaw = 0;-->
+        <!--for(var i in array){-->
+            <!--scoreRaw += parseInt(array[i].split(":")[1]);-->
+
+        <!--}-->
+        <!--//从数组中将成绩撮出来，然后求和取整，并输出。-->
+        <!--var score = Math.round(scoreRaw/array.length);-->
+        <!--console.log(score);-->
+        <!--document.write(score);-->
+    <!--</script>-->
+<!--</head>-->
+<!--<body>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+    <!--<title>浏览器对象</title>-->
+    <!--<meta http-equiv="Content-Type" content="text/html; charset=gkb"/>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash;先编写好网页布局&ndash;&gt;-->
+    <!--<h2 style="margin: 10px">操作成功</h2>-->
+    <!--<span><strong id="time">5</strong>秒后返回到主页-->
+        <!--<a href="#time" onclick="back()">返回</a>-->
+    <!--</span>-->
+
+<!--<script type="text/javascript">-->
+
+    <!--//获取显示秒数的元素，通过定时器来更改秒数。-->
+
+    <!--var time = document.getElementById("time").innerText;-->
+    <!--console.log(time);-->
+    <!--var num = parseInt(time);-->
+    <!--window.onload = function countTime() {-->
+        <!--if(num>=0){-->
+            <!--setTimeout(countTime,1000);-->
+            <!--document.getElementById("time").innerText = num +"";-->
+            <!--num&#45;&#45;;-->
+        <!--}else{-->
+<!--//            window.location.assign("http://www.imooc.com");-->
+        <!--}-->
+    <!--};-->
+
+    <!--function back() {-->
+        <!--history.back();-->
+    <!--}-->
+
+    <!--//通过window的location和history对象来控制网页的跳转。-->
+
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE HTML>-->
+<!--<html>-->
+<!--<head>-->
+    <!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8">-->
+    <!--<title>无标题文档</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div>-->
+    <!--javascript-->
+    <!--<p>javascript</p>-->
+    <!--<div>jQuery</div>-->
+    <!--<h5>PHP</h5>-->
+<!--</div>-->
+<!--<script type="text/javascript">-->
+    <!--document.getElementsByTagName("div")[0]-->
+
+
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<script type="text/javascript">
+    document.write(window.innerHeight+"IE9+、Chrome、Firefox、Opera 以及 Safari：<br/>");
+    document.write(window.outerHeight+"<br/>");
+
+    document.write(screen.availHeight+"<br/>");
+    document.write(screen.height+"<br/>");
+
+    document.write(document.documentElement.clientHeight||document.body.clientHeight+"<br/>");
+
+//    document.write(document.body.clientHeight+"<br/>");
+
+
+    document.write(document.documentElement.scrollHeight||document.body.scrollHeight+"<br/>");
+
+    document.write(document.documentElement.offsetHeight||document.body.offsetHeight+"<br/>");
+
+//    document.write(document.body.scrollHeight+"<br/>");
+</script>
+</body>
+</html>

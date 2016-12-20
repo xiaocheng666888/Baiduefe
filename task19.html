@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 19</title>
+    <style>
+        .display{
+            width: 10px;
+            background-color: red;
+            box-shadow: 2px 2px #ccc;
+            position: absolute;
+            bottom: 0;
+
+        }
+        #display_list{
+            height: 100px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <input type="text" id="iNum">
+    <input type="button" class="button" value="添加" id="add" onclick="add()">
+    <input type="button" class="button" value="冒泡排序" id="rightIn" onclick="bubbleSort()">
+    <input type="button" class="button" value="快速排序" id="leftOut" onclick="btnQuick()">
+    <input type="button" class="button" value="直接插入排序" id="rightOut" onclick = "directInsert()">
+    <input type="button" class="button" value="折半插入排序"  onclick = "binaryInsert()">
+    <input type="button" class="button" value="直接选择排序" onclick="select()">
+    <input type="button" value="随机数组" onclick="randomData()">
+    <input type="button" value="数组去重" onclick="dupRemove()">
+</div>
+<div id="display_list">
+    <!--<div class="display" style="left: 10px">1</div>-->
+</div>
+<script>
+
+    var $ = function (id) {
+        return document.getElementById(id);
+    };
+    var dataList = [];
+    var regex1 = /^(?:[1-9]\d|100)$/;
+    var MAX = 60 ;
+
+
+    function add() {
+        var REGEX =/^[0-9][1-9]*[0-9]]*$/;
+        var input_num = $("iNum").value;
+        if(!REGEX.test(input_num))
+        {
+            alert("请输入10-100之间数字");
+            return;
+        }else if(dataList.length >= MAX){
+            alert("数据已达上限：" + MAX);
+            return;
+        }
+        dataList.push(parseInt(input_num));
+        render(dataList);
+    }
+
+    function binaryInsert(){
+    }
+
+
+    function btnQuick() {
+        var length = dataList.length;
+        quickSort(0,length);
+    }
+
+    function quickSort(l,r){
+        var i = l, j = r, key = l;
+        if(l >= r)
+        {
+            return ;
+            setTimeout(t);
+        }
+        if(i < j){
+            while(dataList[key]<=dataList[j]){
+                j --;
+            }
+            insert(j,i);
+            while(dataList[key] >= dataList[i]){
+                i ++;
+            }
+//            dataList[j] = dataList[i];
+            insert(i,j);
+        }
+        i = key; /*当在当组内找完一遍以后就把中间数key回归*/
+        setTimeout(function () {
+            quickSort(l, i - 1)
+        },1000);        /*最后用同样的方式对分出来的左边的小组进行同上的做法*/
+        setTimeout(function () {
+            quickSort(i + 1, r)
+        },1000);
+    }
+
+    /**
+     *
+     * @param attr                  属性的名称
+     * @returns {*}                返回元素或者元素数组；
+     */
+    function getEle(attr) {
+        var element;
+        if(document.getElementById(attr)!=null){
+            element = document.getElementById(attr);
+        }else if(document.getElementsByClassName(attr)!=null){
+            element = document.getElementsByClassName(attr);
+        }else if(document.getElementsByName(attr)!=null){
+            element = document.getElementsByName(attr);
+        }else if(document.getElementsByTagName(attr)!=null){
+            element = document.getElementsByTagName(attr);
+        }else {
+            return null;
+        }
+        return element;
+    }
+
+
+    function Log(str) {
+        console.log(str);
+    }
+
+    function swap(x,y) {
+        var temp = dataList[x];
+        dataList[x] = dataList[y];
+        dataList[y] = temp;
+        render(dataList);
+    }
+
+
+    /**
+     *                  此函数用于将列表中某个值插入到另外一个值之前
+     * @param x         待插入的值
+     * @param y         要插入的位置
+     */
+    function insert(x,y) {
+        var temp = dataList[x];
+        for(var i = x; i > y; i--){
+            dataList[i] = dataList[i-1];
+            render(dataList);
+//            for(var i = 0;i<10;j++){
+//                for(var j=0;j<100;j++)
+//                {
+//                    Log("延时函数");
+//                }
+//            }
+        }
+        dataList[y] = temp;
+    }
+
+    /**
+     *                        将数组中的数遍历渲染到页面
+     * @param arr            要显示的数组
+     */
+    function render(arr) {
+        var contentHtml = "";
+        for(var i = 0; i < arr.length; i++){
+            contentHtml += "<div class='display' style='left: "+ i*12 +"px;height:"+arr[i]+"px'></div>";
+        }
+        $("display_list").innerHTML = contentHtml;
+    }
+
+    /**
+     *       直接插入排序：
+     *      把待排序的纪录按其关键码值的大小逐个插入到一个已经排好序的有序序列中，直到
+     *      所有的纪录插入完为止，得到一个新的有序序列
+     */
+    function directInsert(){
+        var i = 1,j = 0;
+        var length = dataList.length;
+        var t = setInterval(sort,100);
+        function sort() {
+            if(i<length){
+                if(j < i){
+                    if(dataList[i]>dataList[j]){
+                        Log("i: "+i+"    j: "+j);
+                        Log("[i]: "+dataList[i]+"[j]: "+dataList[j]);
+                        insert(i,j);
+                        i ++;
+                        j = 0;
+                    }else {
+                        j ++ ;
+                    }
+                }else{
+                    i++;
+                    j = 0;
+                }
+            }else {
+                clearInterval(t);
+            }
+        }
+    }
+
+    /**
+     *              冒泡排序：
+     *              相邻的元素进行比较，如果不符合降序或者升序，则交换位置
+     */
+    function bubbleSort(){
+        var length = dataList.length;
+        var i = 0,j = length-1;
+        var t = setInterval(sort,5);
+        var divNodes = getEle("display");
+        function sort() {
+            if(i<length-1){
+                if(j>i-1){
+                    var temp = 0;
+                    Log("i: "+i+"    j: "+j);
+                    Log("[j]: "+dataList[j]+"[j-1]: "+dataList[j-1]);
+                    if(dataList[j-1]< dataList[j]){
+                        swap(j-1,j);
+                    } else {
+                        j--;
+                    }
+                }else {
+                    j = dataList.length-1;
+                    i++;
+                }
+            }else {
+                clearInterval(t);
+                return;
+            }
+        }
+    }
+
+    /**
+     *          随机数算法，随机生成60个数据，并渲染到页面
+     */
+    function randomData(){
+        var randomList = [];
+        var length = randomList.length;
+        for(var i = 0; i < MAX-length; i++){
+            var height = Math.ceil(Math.random()*9) + "" +Math.floor(Math.random()*9);
+            randomList.push(parseInt(height));
+
+        }
+        dataList = randomList;
+        render(dataList);
+        Log(dataList);
+    }
+
+    function dupRemove() {
+        var arr = dataList ;
+        var i = 0, j = 1;
+        var t = setInterval(run,10);
+        function run() {
+            if( i < arr.length - 1){
+                if( j < arr.length){
+                    if(arr[j] === arr[i]){
+                        arr.splice(j,1);
+                        render(arr);
+                    }else {
+                        j++;
+                    }
+
+                }else{
+                    i++;
+                    j = i + 1;
+                }
+
+            }else
+                clearInterval(t);
+        }
+
+    }
+</script>
+</body>
+</html>
+
+
+
+<!--
+基于任务18
+限制输入的数字在10-100
+队列元素数量最多限制为60个，当超过60个时，添加元素时alert出提示
+队列展现方式变化如图，直接用高度表示数字大小-->
+
+<!--
+*********************************************************************************
+疑问：for循环中，每次datalist都不一样，为什么data被push以后数组都一样，数组的长度？？-->

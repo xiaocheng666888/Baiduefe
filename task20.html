@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IFE JavaScript Task 20</title>
+    <style>
+        .display{
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            box-shadow: 2px 2px #ccc;
+            margin: 5px;
+            text-align: center;
+            line-height: 50px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            float: left;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <textarea id="iNum" cols="20" rows="10"></textarea>
+    <input type="button" name="button" value="左侧入" id="leftIn" onclick="btn_leftIn()">
+    <input type="button" name="button" value="右侧入" id="rightIn" onclick="btn_rightIn()">
+    <input type="button" name="button" value="左侧出" id="leftOut" onclick="btn_leftOut()">
+    <input type="button" name="button" value="右侧出" id="rightOut" onclick="btn_rightOut()">
+    <input type="text" id="where">
+    <input type="button" name="button" value="查询" id="query" onclick="btn_query()">
+</div>
+<div id="display_list">
+    <div class="display">1</div>
+</div>
+<script>
+
+    var regex = /^[0-9]*[1-9][0-9]*$/ ;
+    var $ = function(id){
+        return document.getElementById(id);
+    };
+
+    window.onload = setInterval(function () {
+        disListCheck();
+
+        document.onkeyup = function (event) {
+            if(event.keyCode == 13){
+                btn_rightIn();
+            }
+        }
+    },500);
+
+    function btn_rightOut() {
+        var dis = getEle("display_list");
+        dis.removeChild(dis.lastChild);
+    }
+
+    function btn_leftOut() {
+        var dis = getEle("display_list");
+        dis.removeChild(dis.firstChild);
+    }
+    function disListCheck() {
+        var disList = getEle("display");
+        for(var i = 0; i < disList.length; i++){
+            disList[i].index = i;
+            disList[i].onclick = function(){
+                this.parentNode.removeChild(this);
+            }
+        }
+    }
+
+    function getList() {
+        var num = getEle("iNum");
+        if(num.value == ""){
+            alert("请输入内容");
+            return ;
+        }
+        var content = num.value.split(" ");
+        var list = [];
+        for(var i = 0; i < content.length; i++){
+            var newDiv = document.createElement("div");
+            newDiv.className = "display";
+            newDiv.innerText = content[i];
+            list.push(newDiv);
+        }
+        return list;
+    }
+
+    function btn_leftIn() {
+        var dis = getEle("display_list");
+        var list = getList();
+        console.log(list);
+        if(dis.firstChild == null){
+            for(var i = 0; i < list.length; i ++){
+                dis.appendChild(list[i]);
+            }
+        }else{
+            for(var i = 0; i < list.length; i ++){
+                dis.insertBefore(list[i],dis.firstChild);
+
+            }
+            console.log(dis);
+        }
+    }
+
+    function btn_rightIn() {
+        var list = getList();
+        var dis = getEle("display_list");
+        for(var i = 0; i < list.length; i ++){
+            dis.appendChild(list[i]);
+        }
+    }
+
+
+    function btn_query() {
+        var where = getEle("where");
+        var list = getEle("display");
+        console.log(list.length);
+        for(var i = 0; i < list.length; i++){
+            var index = list[i].innerText.indexOf(where.value);
+            if(index>=0){
+                list[i].style.backgroundColor = "blue";
+            }
+        }
+    }
+
+    /**
+     * 根据属性以指定的方式获取元素
+     *
+     * @param attr      属性：ID,ClassName,TagName
+     * @returns {*}     符合要求的元素或元素数组
+     */
+    function getEle(attr) {
+        var element;
+        if(document.getElementById(attr)!=null){
+            element = document.getElementById(attr);
+        }else if(document.getElementsByClassName(attr)!=null){
+            element = document.getElementsByClassName(attr);
+        }else if(document.getElementsByName(attr)!=null){
+            element = document.getElementsByName(attr);
+        }else if(document.getElementsByTagName(attr)!=null){
+            element = document.getElementsByTagName(attr);
+        }else {
+            return null;
+        }
+        return element;
+    }
+</script>
+</body>
+</html>
